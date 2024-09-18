@@ -1,4 +1,6 @@
-﻿using FileSoftware.Contracts;
+﻿using FileSoftware.Constants;
+using FileSoftware.Contracts;
+using FileSoftware.Models;
 
 namespace FileSoftware.Services
 {
@@ -16,6 +18,24 @@ namespace FileSoftware.Services
             {
                 await file.CopyToAsync(stream);
             }
+        }
+
+        public FileContentModel GetFile(string filePath, string fileName)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException(FileListingMessages.FileNotFound, filePath);
+            }
+
+            var fileContent = File.ReadAllBytes(filePath);
+            var contentType = "application/octet-stream";
+
+            return new FileContentModel
+            {
+                Content = fileContent,
+                ContentType = contentType,
+                FileName = fileName
+            };
         }
     }
 }

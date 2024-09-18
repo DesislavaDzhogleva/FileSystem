@@ -1,7 +1,11 @@
 ﻿namespace FileSoftware.Constants
 {
-    public class FileConstants
+    public static class FileConstants
     {
-        private string _storagePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+        public static string StoragePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+
+        public static string FileNameWithoutIdentifier(string name, string extension) => $"{name}.{extension}";
+
+        public static string FileNameWithIdentifier(string name, string extension, string identifier) => $"{name}_{identifier}.{extension}";
     }
 }

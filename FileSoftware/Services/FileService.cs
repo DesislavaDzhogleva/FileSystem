@@ -5,6 +5,7 @@ using FileSoftware.Data.Contracts;
 using FileSoftware.Data.Entities;
 using FileSoftware.Models;
 using FileSoftware.Models.Responses;
+using Microsoft.EntityFrameworkCore;
 
 namespace FileSoftware.Services
 {
@@ -26,6 +27,34 @@ namespace FileSoftware.Services
             _fileStorageService = fileStorageService;
             _mapper = mapper;
             _logger = loggerFactory.CreateLogger<FileService>();
+        }
+
+        public async Task<IEnumerable<FileInputModel>> ListFilesAsync()
+        {
+            var files = await _fileRepository
+                .AllAsNoTracking()
+                .ToListAsync();
+
+            return files.Select(x => _mapper.Map<FileInputModel>(x)).ToList();
+        }
+        public async Task<FileContentModel> GetFileAsync(int id)
+        {
+            var file = await _fileRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (file == null)
+            {
+                throw new FileNotFoundException(FileListingMessages.FileNotFound);
+            }
+
+            var filePath = Path.Combine(_storagePath, 
+                FileConstants.FileNameWithIdentifier(file.Name, file.Extension, file.UniqueIdentifier.ToString()));
+
+            var fileResult = _fileStorageService.GetFile(filePath, 
+                FileConstants.FileNameWithoutIdentifier(file.Name, file.Extension));
+
+            return fileResult;
         }
 
         public async Task<FileUploadResponse> UploadFilesAsync(IFormFile[] files)
