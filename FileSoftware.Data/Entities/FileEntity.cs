@@ -12,8 +12,11 @@ namespace FileSoftware.Data.Entities
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(30)]
+        [MaxLength(100)]
         public string Extension { get; set; }
+
+        [Required]
+        public Guid UniqueIdentifier { get; set; }
 
         [Required]
         public string FilePath { get; set; }
