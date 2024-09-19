@@ -47,7 +47,8 @@ namespace FileSoftware.Controllers.Api
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFile(int id)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {

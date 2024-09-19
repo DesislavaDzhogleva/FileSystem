@@ -14,6 +14,10 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
     serverOptions.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(30);
 });
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-CSRF-TOKEN"; 
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IFileService, FileService>();
