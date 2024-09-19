@@ -13,6 +13,10 @@ namespace FileSoftware.Data.Contracts
 
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
 
+        Task ExecuteInTransactionAsync(Func<Task> operation);
+        
+        void Delete(TEntity entity);
+
         Task<int> SaveChangesAsync();
     }
 }

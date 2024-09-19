@@ -37,5 +37,16 @@ namespace FileSoftware.Services
                 FileName = fileName
             };
         }
+
+        public async Task<bool> DeleteFileAsync(string filePath)
+        {
+            //If it does not exist in the storage, we consider it deleted
+            if (File.Exists(filePath))
+            {
+                await Task.Run(() => File.Delete(filePath));
+            }
+
+            return !File.Exists(filePath);
+        }
     }
 }

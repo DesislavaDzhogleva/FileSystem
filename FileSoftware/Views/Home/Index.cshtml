@@ -1,8 +1,37 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Files Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="flexed-container">
+    <div class="upload-container">
+        <h2>Upload Your Files</h2>
+
+        <form id="uploadForm" action="/api/files/upload" method="POST" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="file-drop-area">
+                <p><i>&#8682;</i> Drag & Drop your files here</p>
+                <input type="file" id="fileInput" name="files[]" multiple onchange="displayFileNames()">
+            </div>
+
+            <div class="or-divider">OR</div>
+
+            <label for="fileInput" class="custom-file-label">Browse Files</label>
+
+            <div id="fileNames"></div>
+
+            <button type="submit" class="upload-btn">Upload Files</button>
+        </form>
+    </div>
+
+    <div class="file-list-container">
+        <h2>Your Files</h2>
+        <ul class="file-list" id="fileList">
+            <!-- Files will be dynamically populated here -->
+        </ul>
+    </div>
 </div>
+
+<div id="notificationContainer"></div>
+
+
+<script src="~/js/uploadFiles.js" asp-append-version="true"></script>

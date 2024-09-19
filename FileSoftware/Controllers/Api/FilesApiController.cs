@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FileSoftware.Controllers.Api
 {
-    [Route("api/[controller]")]
+    [Route("api/files")]
     [ApiController]
     public class FilesApiController : ControllerBase
     {
@@ -17,6 +17,7 @@ namespace FileSoftware.Controllers.Api
         }
 
         [HttpPost("upload")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UploadFiles([FromForm] IFormFile[] files)
         {
             if (files == null || files.Length == 0)
@@ -41,6 +42,25 @@ namespace FileSoftware.Controllers.Api
             catch (Exception ex)
             {
                 return StatusCode(500, FileUploadResponse.CommonResponse(ex.Message));
+            }
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFile(int id)
+        {
+            try
+            {
+                await _fileService.DeleteFileAsync(id);
+                return Ok("File deleted successfully.");
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
 
