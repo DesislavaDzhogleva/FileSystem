@@ -112,14 +112,14 @@ namespace FileSoftware.Services
                     .UploadSuccess(FileUploadMessages.FileUploadedSuccessfully(currentFileInfo.Name, currentFileInfo.Extensions), file.FileName);
                 successResponses.Add(itemResponse);
             }
-
-            //Save changes at once and upload all files asynchronously
+         
+            //TODO: In-memory database does not support transactions, so when running tests, it will throw an exception -> it might to be developed with SqlLite, but then it has an issue with one of the migrations, so I have to create new migrations and thats why for the purpose of this example, i left it for now
             await _fileRepository.ExecuteInTransactionAsync(async () =>
             {
                 await _fileRepository.SaveChangesAsync();
                 await Task.WhenAll(filesToUpload);
             });
-           
+
             //Add messages about rows after all files are uploaded without exceptions
             response.FileUploads = response.FileUploads.Concat(successResponses).ToList();
 

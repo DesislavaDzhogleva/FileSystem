@@ -64,7 +64,7 @@ const FileUpload = ({ onFileUpload }) => {
                                 <li key={index}>{fileName}</li>
                             ))}
                         </ul>
-                    )}
+                    ) : ''}
                 </div>
 
                 <button type="submit" className="upload-btn">
