@@ -7,5 +7,7 @@ namespace FileSoftware.Contracts
         Task UploadFileAsync(IFormFile file, string filePath);
 
         FileContentModel GetFile(string filePath, string fileName);
+
+        Task<bool> DeleteFileAsync(string filePath);
     }
 }

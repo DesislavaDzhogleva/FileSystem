@@ -13,10 +13,251 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.root {
+    padding-bottom: 200px;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+h2 {
+    margin: 20px;
+}
+
+.flexed-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-shrink: 0;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 400px;
+    height: 600px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.flexed-container {
+    gap: 20px;
+    align-items: flex-start; 
+    padding-bottom: 100px;
+}
+
+.file-list-container {
+    flex-grow: 1;
+    width: 600px;
+    max-height: 600px;
+    overflow-y: auto; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.file-drop-area,
+.custom-file-label {
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.file-drop-area {
+    position: relative;
+    border: 2px dashed #007bff;
+    padding: 40px;
+    cursor: pointer;
+}
+
+    .file-drop-area:hover {
+        background-color: #f0f8ff;
+    }
+
+    .file-drop-area input[type="file"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .file-drop-area p {
+        margin: 0;
+        font-size: 16px;
+        color: #666;
+    }
+
+        .file-drop-area p i {
+            font-size: 50px;
+            color: #007bff;
+        }
+
+
+
+.or-divider,
+.custom-file-label {
+    text-align: center;
+    cursor: pointer;
+    margin: 20px 0;
+}
+
+.custom-file-label {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+    .custom-file-label:hover {
+        background-color: #0056b3;
+    }
+
+.upload-btn,
+.download-btn {
+    padding: 12px 25px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .upload-btn:hover,
+    .download-btn:hover {
+        background-color: #218838;
+    }
+
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+    .file-item:hover {
+        background-color: #f1f1f1;
+    }
+
+.file-buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 120px;
+}
+
+.download-btn, .delete-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+    .file-info i {
+        font-size: 24px;
+        color: #007bff;
+    }
+
+    .file-info span {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+
+.file-date {
+    font-size: 12px;
+    color: #888;
+}
+
+@media (max-width: 600px) {
+    .file-list-container,
+    .file-info {
+        width: 90%;
+    }
+
+    .file-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+#footer {
+    bottom: 0;
+    color: #707070;
+    position: fixed;
+    font-size: small;
+    width: 100%;
+    height: 60px;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+#fileNames {
+    margin: 20px;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+    overflow-y: auto;
+    max-height: 100px;
 }

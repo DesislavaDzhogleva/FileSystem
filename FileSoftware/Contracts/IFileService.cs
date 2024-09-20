@@ -7,8 +7,10 @@ namespace FileSoftware.Contracts
     {
         Task<FileUploadResponse> UploadFilesAsync(IFormFile[] files);
 
-        Task<IEnumerable<FileInputModel>> ListFilesAsync();
+        Task<IEnumerable<FileDto>> ListFilesAsync();
 
         Task<FileContentModel> GetFileAsync(int id);
+
+        Task DeleteFileAsync(int id);
     }
 }

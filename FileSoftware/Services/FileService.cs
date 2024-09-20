@@ -29,13 +29,32 @@ namespace FileSoftware.Services
             _logger = loggerFactory.CreateLogger<FileService>();
         }
 
-        public async Task<IEnumerable<FileInputModel>> ListFilesAsync()
+        public async Task DeleteFileAsync(int id)
+        {
+            var file = await _fileRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (file == null)
+            {
+                throw new FileNotFoundException(FileListingMessages.FileNotFound);
+            }
+
+            _fileRepository.Delete(file);
+            await _fileRepository.ExecuteInTransactionAsync(async () =>
+            {
+                await _fileRepository.SaveChangesAsync();
+                await _fileStorageService.DeleteFileAsync(file.FilePath);
+            });
+        }
+
+        public async Task<IEnumerable<FileDto>> ListFilesAsync()
         {
             var files = await _fileRepository
                 .AllAsNoTracking()
                 .ToListAsync();
 
-            return files.Select(x => _mapper.Map<FileInputModel>(x)).ToList();
+            return files.Select(x => _mapper.Map<FileDto>(x)).ToList();
         }
         public async Task<FileContentModel> GetFileAsync(int id)
         {
@@ -95,9 +114,12 @@ namespace FileSoftware.Services
             }
 
             //Save changes at once and upload all files asynchronously
-            await _fileRepository.SaveChangesAsync();
-            await Task.WhenAll(filesToUpload);
-
+            await _fileRepository.ExecuteInTransactionAsync(async () =>
+            {
+                await _fileRepository.SaveChangesAsync();
+                await Task.WhenAll(filesToUpload);
+            });
+           
             //Add messages about rows after all files are uploaded without exceptions
             response.FileUploads = response.FileUploads.Concat(successResponses).ToList();
 

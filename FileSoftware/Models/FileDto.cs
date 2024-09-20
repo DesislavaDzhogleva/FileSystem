@@ -2,7 +2,7 @@
 
 namespace FileSoftware.Models
 {
-    public class FileInputModel
+    public class FileDto
     {
         public int Id { get; set; }
 
